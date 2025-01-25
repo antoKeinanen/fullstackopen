@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Statistics from "./components/statistics";
+import Button from "./components/button";
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -24,9 +25,9 @@ const App = () => {
       <section>
         <h1>give feedback</h1>
         <div>
-          <button onClick={() => handleReview("good")}>good</button>
-          <button onClick={() => handleReview("neutral")}>neutral</button>
-          <button onClick={() => handleReview("bad")}>bad</button>
+          <Button onClick={() => handleReview("good")} text="good" />
+          <Button onClick={() => handleReview("neutral")} text="neutral" />
+          <Button onClick={() => handleReview("bad")} text="bad" />
         </div>
       </section>
 

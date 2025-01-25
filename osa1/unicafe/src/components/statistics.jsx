@@ -1,3 +1,5 @@
+import StatisticLine from "./statistic_line";
+
 function Statistics({ good, neutral, bad, average, positiveRatio }) {
   return (
     <section>
@@ -5,11 +7,11 @@ function Statistics({ good, neutral, bad, average, positiveRatio }) {
       <div>
         {good || neutral || bad ? (
           <>
-            <p>good {good}</p>
-            <p>neutral {neutral}</p>
-            <p>bad {bad}</p>
-            <p>average {average}</p>
-            <p>positive ratio {positiveRatio}%</p>
+            <StatisticLine text="good" value={good} />
+            <StatisticLine text="neutral" value={neutral} />
+            <StatisticLine text="bad" value={bad} />
+            <StatisticLine text="average" value={average} />
+            <StatisticLine text="positive ratio" value={positiveRatio} percent/>
           </>
         ) : (
           <p>No feedback given</p>
