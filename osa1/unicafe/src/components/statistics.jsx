@@ -6,13 +6,19 @@ function Statistics({ good, neutral, bad, average, positiveRatio }) {
       <h1>statistics</h1>
       <div>
         {good || neutral || bad ? (
-          <>
-            <StatisticLine text="good" value={good} />
-            <StatisticLine text="neutral" value={neutral} />
-            <StatisticLine text="bad" value={bad} />
-            <StatisticLine text="average" value={average} />
-            <StatisticLine text="positive ratio" value={positiveRatio} percent/>
-          </>
+          <table>
+            <tbody>
+              <StatisticLine text="good" value={good} />
+              <StatisticLine text="neutral" value={neutral} />
+              <StatisticLine text="bad" value={bad} />
+              <StatisticLine text="average" value={average} />
+              <StatisticLine
+                text="positive ratio"
+                value={positiveRatio}
+                percent
+              />
+            </tbody>
+          </table>
         ) : (
           <p>No feedback given</p>
         )}
