@@ -1,5 +1,5 @@
-function Total({ exercises1, exercises2, exercises3 }) {
-  return <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>;
+function Total({ parts }) {
+  return <p>Number of exercises {parts.reduce((acc, p) => acc + p.exercises, 0)}</p>;
 }
 
 export default Total;
