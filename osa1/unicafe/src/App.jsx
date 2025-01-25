@@ -29,13 +29,17 @@ const App = () => {
           <button onClick={() => handleReview("bad")}>bad</button>
         </div>
       </section>
-      <Statistics
-        good={good}
-        neutral={neutral}
-        bad={bad}
-        average={average}
-        positiveRatio={positiveRatio}
-      />
+      {good || neutral || bad ? (
+        <Statistics
+          good={good}
+          neutral={neutral}
+          bad={bad}
+          average={average}
+          positiveRatio={positiveRatio}
+        />
+      ) : (
+        <p>No feedback given</p>
+      )}
     </main>
   );
 };
