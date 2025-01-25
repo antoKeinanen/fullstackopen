@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getRandomInt } from "./util/rand";
 
 const App = () => {
@@ -15,6 +15,7 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState({});
+  const max = useRef({ i: 0, v: 0 });
 
   function handleNextAnecdote() {
     setSelected(getRandomInt(0, anecdotes.length));
@@ -24,16 +25,30 @@ const App = () => {
     const copy = { ...votes };
     copy[selected] ??= 0;
     copy[selected] += 1;
+
+    if (copy[selected] > max.current.v) {
+      max.current.v = copy[selected];
+      max.current.i = selected;
+    }
+
     setVotes(copy);
   }
 
   return (
-    <div>
-      <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected] ?? 0} votes</p>
-      <button onClick={handleVote}>vote</button>
-      <button onClick={handleNextAnecdote}>next anecdote</button>
-    </div>
+    <main>
+      <section>
+        <h1>Anecdote of the day</h1>
+        <p>{anecdotes[selected]}</p>
+        <p>has {votes[selected] ?? 0} votes</p>
+        <button onClick={handleVote}>vote</button>
+        <button onClick={handleNextAnecdote}>next anecdote</button>
+      </section>
+      <section>
+        <h1>Anecdote with most votes</h1>
+        <p>{anecdotes[max.current.i]}</p>
+        <p>has {max.current.v} votes</p>
+      </section>
+    </main>
   );
 };
 
