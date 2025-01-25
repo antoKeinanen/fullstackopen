@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import Statistics from "./components/statistics";
 
 const App = () => {
-  // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
@@ -29,16 +29,13 @@ const App = () => {
           <button onClick={() => handleReview("bad")}>bad</button>
         </div>
       </section>
-      <section>
-        <h1>statistics</h1>
-        <div>
-          <p>good {good}</p>
-          <p>neutral {neutral}</p>
-          <p>bad {bad}</p>
-          <p>average {average}</p>
-          <p>positive ratio {positiveRatio}%</p>
-        </div>
-      </section>
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        average={average}
+        positiveRatio={positiveRatio}
+      />
     </main>
   );
 };
