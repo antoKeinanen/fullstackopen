@@ -1,0 +1,13 @@
+.notification {
+  width: 25vw;
+  background-color: lightblue;
+  border: 5px solid darkblue;
+  padding: 1.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+}
+
+.error {
+  background-color: pink;
+  border: 5px solid darkred;
+}
