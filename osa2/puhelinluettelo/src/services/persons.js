@@ -9,7 +9,12 @@ function createPerson(person) {
   return axios.post(baseUrl, person);
 }
 
+function deletePerson(id) {
+  return axios.delete(`${baseUrl}/${id}`);
+}
+
 export default {
   getAllPersons,
   createPerson,
+  deletePerson,
 };

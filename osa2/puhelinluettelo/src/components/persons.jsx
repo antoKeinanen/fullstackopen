@@ -1,4 +1,4 @@
-function Persons({ persons, search }) {
+function Persons({ persons, search, handleDeletePerson }) {
   return (
     <>
       {persons
@@ -7,7 +7,10 @@ function Persons({ persons, search }) {
         )
         .map((person, i) => (
           <p key={i}>
-            {person.name} {person.number}
+            {person.name} {person.number}{" "}
+            <button onClick={() => handleDeletePerson(person.id, person.name)}>
+              delete
+            </button>
           </p>
         ))}
     </>

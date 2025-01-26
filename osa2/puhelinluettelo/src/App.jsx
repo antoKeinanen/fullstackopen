@@ -14,7 +14,7 @@ const App = () => {
 
   function handleAddPerson(event) {
     event.preventDefault();
-    
+
     const name = event.target.name.value;
     const number = event.target.number.value;
     const newPerson = { name, number };
@@ -30,6 +30,14 @@ const App = () => {
     });
   }
 
+  function handleDeletePerson(id, name) {
+    if (window.confirm(`Haluatko varmasti poistaa ${name}`))
+    personService.deletePerson(id).then((resp) => {
+      console.log(resp);
+      setPersons(persons.filter((p) => p.id != id));
+    });
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -37,7 +45,11 @@ const App = () => {
       <h2>Add new</h2>
       <PersonForm onSubmit={handleAddPerson} />
       <h2>Numbers</h2>
-      <Persons persons={persons} search={search} />
+      <Persons
+        persons={persons}
+        search={search}
+        handleDeletePerson={handleDeletePerson}
+      />
     </div>
   );
 };
