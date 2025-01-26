@@ -18,9 +18,16 @@ const App = () => {
     const name = event.target.name.value;
     const number = event.target.number.value;
     const newPerson = { name, number };
+    const found = persons.find((p) => p.name == name);
 
-    if (persons.find((p) => p.name == name)) {
-      window.alert(`${name} is already added to phonebook`);
+    if (
+      found &&
+      window.confirm(
+        `${name} is already added to phonebook would you like to update the number?`
+      )
+    ) {
+      personService.updatePerson(found.id, newPerson).then(console.log);
+      setPersons(persons.map((p) => (p.id == found.id ? newPerson : p)));
       return;
     }
 
@@ -31,11 +38,11 @@ const App = () => {
   }
 
   function handleDeletePerson(id, name) {
-    if (window.confirm(`Haluatko varmasti poistaa ${name}`))
-    personService.deletePerson(id).then((resp) => {
-      console.log(resp);
-      setPersons(persons.filter((p) => p.id != id));
-    });
+    if (window.confirm(`Delete ${name}?`))
+      personService.deletePerson(id).then((resp) => {
+        console.log(resp);
+        setPersons(persons.filter((p) => p.id != id));
+      });
   }
 
   return (
