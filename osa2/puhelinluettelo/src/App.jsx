@@ -2,36 +2,32 @@ import { useEffect, useState } from "react";
 import Filter from "./components/filter";
 import PersonForm from "./components/person_form";
 import Persons from "./components/persons";
-import axios from "axios";
+import personService from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((response) => setPersons(response.data))
-      .catch((e) => console.error("Failed to fulfill request: ", e));
+    personService.getAllPersons().then((resp) => setPersons(resp.data));
   }, []);
 
   function handleAddPerson(event) {
     event.preventDefault();
+    
     const name = event.target.name.value;
     const number = event.target.number.value;
     const newPerson = { name, number };
+
     if (persons.find((p) => p.name == name)) {
       window.alert(`${name} is already added to phonebook`);
       return;
     }
 
-    axios
-      .post("http://localhost:3001/persons", newPerson)
-      .then((resp) => {
-        console.log(resp);
-        setPersons((p) => [...p, { name, number }]);
-      })
-      .catch((e) => console.error(e));
+    personService.createPerson(newPerson).then((resp) => {
+      console.log(resp);
+      setPersons((p) => [...p, newPerson]);
+    });
   }
 
   return (
