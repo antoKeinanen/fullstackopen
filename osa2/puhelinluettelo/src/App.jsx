@@ -19,13 +19,19 @@ const App = () => {
     event.preventDefault();
     const name = event.target.name.value;
     const number = event.target.number.value;
-
+    const newPerson = { name, number };
     if (persons.find((p) => p.name == name)) {
       window.alert(`${name} is already added to phonebook`);
       return;
     }
 
-    setPersons((p) => [...p, { name, number }]);
+    axios
+      .post("http://localhost:3001/persons", newPerson)
+      .then((resp) => {
+        console.log(resp);
+        setPersons((p) => [...p, { name, number }]);
+      })
+      .catch((e) => console.error(e));
   }
 
   return (
