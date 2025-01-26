@@ -6,29 +6,38 @@ import CountryList from "./components/country-list";
 import SingleCountry from "./components/single-country";
 
 function App() {
-  const [countries, setCountries] = useState([]);
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search, { timeoutMs: 500 });
-
-  let countryComponent = <CountryList countries={countries} />;
-  if (countries.length > 10) {
-    countryComponent = <p>Too many matches, specify the filter</p>;
-  }
-  if (countries.length == 1) {
-    countryComponent = <SingleCountry country={countries[0]} />;
-  }
+  const [countryComponent, setCountryComponent] = useState(
+    <CountryList handleShowCountry={handleShowCountry} countries={[]} />
+  );
 
   useEffect(() => {
-    countriesService
-      .getAll()
-      .then((resp) =>
-        setCountries(
-          resp.data.filter((c) =>
-            c.name.common.toLowerCase().includes(deferredSearch.toLowerCase())
-          )
-        )
+    countriesService.getAll().then((resp) => {
+      const countries = resp.data.filter((c) =>
+        c.name.common.toLowerCase().includes(deferredSearch.toLowerCase())
       );
+
+      console.log(countries);
+
+      if (countries.length > 10) {
+        setCountryComponent(<p>Too many matches, specify the filter</p>);
+      } else if (countries.length == 1) {
+        setCountryComponent(<SingleCountry country={countries[0]} />);
+      } else {
+        setCountryComponent(
+          <CountryList
+            countries={countries}
+            handleShowCountry={handleShowCountry}
+          />
+        );
+      }
+    });
   }, [deferredSearch]);
+
+  function handleShowCountry(country) {
+    setCountryComponent(<SingleCountry country={country} />);
+  }
 
   return (
     <main>
