@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-const contacts = [
+let contacts = [
   {
     name: "Arto Hellas",
     number: "040-123456",
@@ -39,6 +39,20 @@ app.get("/api/persons/:id", (req, res) => {
   }
 
   res.json(found);
+});
+
+app.delete("/api/persons/:id", (req, res) => {
+  const id = req.params.id;
+  const preFiltered = contacts.length;
+  contacts = contacts.filter((c) => c.id != id);
+
+  if (preFiltered == contacts.length) {
+    console.error("Failed to delete person with id", id);
+    res.sendStatus(404);
+    return;
+  }
+
+  res.sendStatus(204);
 });
 
 app.get("/info", (req, res) => {
