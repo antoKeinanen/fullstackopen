@@ -28,6 +28,19 @@ app.get("/api/persons", (req, res) => {
   res.json(contacts);
 });
 
+app.get("/api/persons/:id", (req, res) => {
+  const id = req.params.id;
+  const found = contacts.find((c) => c.id == id);
+
+  if (!found) {
+    console.error("Failed to get person with id", id);
+    res.sendStatus(404);
+    return;
+  }
+
+  res.json(found);
+});
+
 app.get("/info", (req, res) => {
   const now = new Date().toString();
   res.send(`Phonebook has info for ${contacts.length} people <br> ${now}`);
