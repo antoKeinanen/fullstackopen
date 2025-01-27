@@ -46,6 +46,18 @@ app.get("/api/persons/:id", (req, res) => {
 app.post("/api/persons", (req, res) => {
   const person = req.body;
 
+  if (!person.name || !person.number) {
+    res.status(400);
+    res.json({ error: "Missing name or number" });
+    return;
+  }
+
+  if (contacts.find((c) => c.name == person.name)) {
+    res.status(400);
+    res.json({ error: "Name must be unique" });
+    return;
+  }
+
   const id = (Math.floor(Math.random() * (1_000_000 - 100)) + 100).toString();
   person["id"] = id;
 
