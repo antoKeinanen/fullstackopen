@@ -1,5 +1,7 @@
 const express = require("express");
+
 const app = express();
+app.use(express.json());
 
 let contacts = [
   {
@@ -39,6 +41,18 @@ app.get("/api/persons/:id", (req, res) => {
   }
 
   res.json(found);
+});
+
+app.post("/api/persons", (req, res) => {
+  const person = req.body;
+
+  const id = (Math.floor(Math.random() * (1_000_000 - 100)) + 100).toString();
+  person["id"] = id;
+
+  contacts.push(person);
+
+  res.status(201);
+  res.json(person);
 });
 
 app.delete("/api/persons/:id", (req, res) => {
