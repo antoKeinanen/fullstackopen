@@ -1,5 +1,8 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/api/persons";
+const baseUrl =
+  import.meta.env.NODE_ENV == "production"
+    ? "https://fullstackopen-sgex.onrender.com"
+    : "http://localhost:3001/api/persons";
 
 function getAllPersons() {
   return axios.get(baseUrl);
